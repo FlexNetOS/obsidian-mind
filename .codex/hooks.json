@@ -1,41 +1,40 @@
 {
   "hooks": {
-    "SessionStart": [
-      {
-        "matcher": "startup|resume",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node --disable-warning=ExperimentalWarning --experimental-strip-types \"${CODEX_PROJECT_DIR:-.}/.claude/scripts/session-start.ts\"",
-            "timeout": 30
-          }
-        ]
-      }
-    ],
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node --disable-warning=ExperimentalWarning --experimental-strip-types \"${CODEX_PROJECT_DIR:-.}/.claude/scripts/classify-message.ts\"",
-            "timeout": 15
-          }
-        ]
-      }
-    ],
     "PostToolUse": [
       {
-        "matcher": "Write|Edit",
         "hooks": [
           {
-            "type": "command",
             "command": "node --disable-warning=ExperimentalWarning --experimental-strip-types \"${CODEX_PROJECT_DIR:-.}/.claude/scripts/validate-write.ts\"",
-            "timeout": 15
+            "timeout": 15,
+            "type": "command"
           },
           {
-            "type": "command",
             "command": "node --disable-warning=ExperimentalWarning --experimental-strip-types \"${CODEX_PROJECT_DIR:-.}/.claude/scripts/qmd-refresh.ts\"",
-            "timeout": 15
+            "timeout": 15,
+            "type": "command"
+          }
+        ],
+        "matcher": "Write|Edit"
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "command": "node --disable-warning=ExperimentalWarning --experimental-strip-types \"${CODEX_PROJECT_DIR:-.}/.claude/scripts/session-start.ts\"",
+            "timeout": 30,
+            "type": "command"
+          }
+        ],
+        "matcher": "startup|resume"
+      },
+      {
+        "hooks": [
+          {
+            "command": "sh -lc 'root=\"$(git rev-parse --show-toplevel)\"; exec rusty-idd next --base \"$root\"'",
+            "statusMessage": "Rusty IDD front door: computing the next step",
+            "timeout": 180,
+            "type": "command"
           }
         ]
       }
@@ -44,9 +43,20 @@
       {
         "hooks": [
           {
-            "type": "command",
             "command": "node --disable-warning=ExperimentalWarning --experimental-strip-types \"${CODEX_PROJECT_DIR:-.}/.claude/scripts/stop-checklist.ts\"",
-            "timeout": 5
+            "timeout": 5,
+            "type": "command"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "command": "node --disable-warning=ExperimentalWarning --experimental-strip-types \"${CODEX_PROJECT_DIR:-.}/.claude/scripts/classify-message.ts\"",
+            "timeout": 15,
+            "type": "command"
           }
         ]
       }
