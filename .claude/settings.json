@@ -48,6 +48,14 @@
             "type": "command"
           }
         ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.handoff/hooks/loop-entry.sh\""
+          }
+        ]
       }
     ],
     "Stop": [
@@ -68,6 +76,16 @@
             "command": "node --disable-warning=ExperimentalWarning --experimental-strip-types \"${CLAUDE_PROJECT_DIR:-.}/.claude/scripts/classify-message.ts\"",
             "timeout": 15,
             "type": "command"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/.handoff/hooks/session-end.sh\""
           }
         ]
       }
